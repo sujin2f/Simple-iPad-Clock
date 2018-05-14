@@ -3,6 +3,7 @@
 jQuery(document).ready(($) => {
   let flickrTimer;
   let flickrPhotos;
+  const flickrPhotosKeep = [];
   let weatherTimer;
 
   const toTitleCase = str => str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
@@ -23,6 +24,12 @@ jQuery(document).ready(($) => {
 
     const photoId = flickrPhotos[Math.floor(Math.random() * flickrPhotos.length)];
 
+    if (flickrPhotosKeep[photoId.id]) {
+      $('#flickr-foreground').attr('style', `background-image: url(${flickrPhotosKeep[photoId.id]})`);
+      flickrTimer = setTimeout(getFlickrPhoto, 1000 * 60 * 30);
+      return;
+    }
+
     // now call the flickr API and get the picture with a nice size
     $.getJSON(
       'https://api.flickr.com/services/rest/',
@@ -37,6 +44,7 @@ jQuery(document).ready(($) => {
       if (response.stat === 'ok') {
         const theUrl = response.sizes.size[5].source;
         $('#flickr-foreground').attr('style', `background-image: url(${theUrl})`);
+        flickrPhotosKeep[photoId.id] = theUrl;
 
         flickrTimer = setTimeout(getFlickrPhoto, 1000 * 60 * 30);
       }
@@ -102,6 +110,10 @@ jQuery(document).ready(($) => {
     document.getElementById('m-pointer').setAttribute('transform', `rotate(${m}, 50, 50)`);
     document.getElementById('s-pointer').setAttribute('transform', `rotate(${s}, 50, 50)`);
 
+    document.getElementById('digital-h-pointer').setAttribute('transform', `rotate(${h}, 50, 50)`);
+    document.getElementById('digital-m-pointer').setAttribute('transform', `rotate(${m}, 50, 50)`);
+
+
     document.getElementById('digital').textContent = `${fillZero(date.getHours())}:${fillZero(date.getMinutes())}:${fillZero(date.getSeconds())}`;
 
     setTimeout(timerTick, 1000);
@@ -118,7 +130,7 @@ jQuery(document).ready(($) => {
       el.setAttribute('y2', type === 'min' ? '6' : '7');
       el.setAttribute('transform', `rotate(${(i * 360) / 60} 50 50)`);
       el.setAttribute('class', type === 'min' ? 'grad-min' : 'grad-hour');
-      document.getElementById('clock').appendChild(el);
+      document.getElementById('clock').insertBefore(el, document.getElementById('clock').firstChild);
     }
 
     $('#clock-container #clock').width($(document).height());
@@ -145,6 +157,7 @@ jQuery(document).ready(($) => {
     $('#clock #digital').addClass('hidden');
     $('#weather').removeClass('hidden');
     $('#wifi').addClass('hidden');
+    $('#d-pointers').addClass('hidden');
   });
 
   $('#btn-digital').click(() => {
@@ -153,12 +166,14 @@ jQuery(document).ready(($) => {
     $('#clock #digital').removeClass('hidden');
     $('#weather').removeClass('hidden');
     $('#wifi').addClass('hidden');
+    $('#d-pointers').removeClass('hidden');
   });
 
   $('#btn-wifi').click(() => {
     $('#clock').addClass('hidden');
     $('#weather').addClass('hidden');
     $('#wifi').removeClass('hidden');
+    $('#d-pointers').addClass('hidden');
   });
 
   $('#settings-container svg').click(() => {

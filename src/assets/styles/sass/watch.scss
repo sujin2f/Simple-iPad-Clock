@@ -25,17 +25,16 @@ html, body {
 		right: 0;
 
 		#h-pointer {
-			stroke-width: 3px;
+			stroke-width: 2px;
 			stroke: white;
 		}
 
 		#s-pointer {
-			stroke-width: 1px;
-			stroke: white;
+			stroke-width: 0.5px;
 		}
 
 		#m-pointer {
-			stroke-width: 3px;
+			stroke-width: 2px;
 			stroke: white;
 		}
 
@@ -53,6 +52,11 @@ html, body {
 			stroke: white;
 			fill: white;
 			font-family: sans-serif;
+		}
+
+		.s-pointer {
+			stroke: #CCCCCC;
+			fill: #CCCCCC;
 		}
 	}
 

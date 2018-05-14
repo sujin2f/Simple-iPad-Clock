@@ -11,21 +11,27 @@ const concat = require('gulp-concat');
 const rename = require('gulp-rename');
 const sass = require('gulp-sass');
 const htmlmin = require('gulp-htmlmin');
+const del = require('del');
 
-const srcScss = [
-  './src/assets/styles/sass/**/*.scss',
-];
+const dest = './build';
 
-const srcJs = [
-  './src/assets/scripts/**/*.js',
-];
+const paths = {
+  styles: {
+    src: './src/assets/styles/sass/**/*.scss',
+    dest: `${dest}/assets/css/`,
+  },
+  scripts: {
+    src: './src/assets/scripts/**/*.js',
+    dest: `${dest}/assets/scripts/`,
+  },
+  html: {
+    src: './src/**/*.html',
+    dest: `${dest}/`,
+  },
+};
 
-const srcHTML = [
-  './src/**/*.html',
-];
-
-gulp.task('scss', function() {
-  return gulp.src(srcScss[0])
+const gulpSass = () => {
+  return gulp.src(paths.styles.src)
     .pipe(plumber(function(error) {
       gutil.log(gutil.colors.red(error.message));
       this.emit('end');
@@ -37,49 +43,49 @@ gulp.task('scss', function() {
       cascade: false
     }))
     .pipe(concat('styles.css'))
-    .pipe(gulp.dest('./build/assets/css/'))
+    .pipe(gulp.dest(paths.styles.dest))
     .pipe(rename({suffix: '.min'}))
     .pipe(cssnano())
     .pipe(sourcemaps.write('.')) // Creates sourcemaps for minified styles
-    .pipe(gulp.dest('./build/assets/css/'))
-});
+    .pipe(gulp.dest(paths.styles.dest))
+};
 
-gulp.task('scripts', function() {
-  return gulp.src(srcJs)
+const gulpScripts = () => {
+  return gulp.src(paths.scripts.src)
     .pipe(plumber())
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(babel())
     .pipe(sourcemaps.init())
-//     .pipe(concat('scripts.js'))
-    .pipe(gulp.dest('./build/assets/scripts'))
+    .pipe(gulp.dest(paths.scripts.dest))
     .pipe(rename({suffix: '.min'}))
     .pipe(uglify())
     .pipe(sourcemaps.write('.')) // Creates sourcemap for minified JS
-    .pipe(gulp.dest('./build/assets/scripts'))
-});
+    .pipe(gulp.dest(paths.scripts.dest))
 
-gulp.task('html', function() {
-  return gulp.src(srcHTML)
+};
+
+const gulpHtml = () => {
+  return gulp.src(paths.html.src)
     .pipe(htmlmin({
       collapseWhitespace: true,
       removeComments: true,
     }))
-    .pipe(gulp.dest('./build/'))
-});
+    .pipe(gulp.dest(paths.html.dest))
+};
 
-gulp.task('watch', function() {
-  // Watch .scss files
-  gulp.watch(srcScss, gulp.series('scss'));
+const clean = () => {
+  return del([ dest ]);
+};
 
-  // Watch .scss files
-  gulp.watch(srcJs, gulp.series('scripts'));
+const watch = () => {
+  gulp.watch(paths.scripts.src, gulpScripts);
+  gulp.watch(paths.styles.src, gulpSass);
+  gulp.watch(paths.html.src, gulpHtml);
+}
 
-  // Watch .html files
-  gulp.watch(srcHTML, gulp.series('html'));
-});
+const build = gulp.series(clean, gulp.parallel(gulpSass, gulpScripts, gulpHtml));
 
-// Run styles, site-js and foundation-js
-gulp.task('default', function() {
-  gulp.start('scss', 'scripts', 'html');
-});
+gulp.task('build', build);
+gulp.task('default', build);
+gulp.task('watch', watch);
