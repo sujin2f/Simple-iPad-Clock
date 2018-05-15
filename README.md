@@ -2,6 +2,8 @@
 
 ### This project is for making old tablets as a table clock. The old tablets may not use modern HTML or CSS technologies, so this code is made woking on the first released iPad.
 
+![Example](assets/images/table-clock.jpg)
+
 ## Installation
 If you haven't installed gulp globally:
 

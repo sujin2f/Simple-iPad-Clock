@@ -83,17 +83,17 @@ jQuery(document).ready(($) => {
   const getWeather = () => {
     const appkey = Cookies.get('weather-appkey');
     const city = Cookies.get('weather-city');
-    const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&APPID=${appkey}&units=metric`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${appkey}&units=metric`;
 
     if (!appkey) {
       return;
     }
 
     $.getJSON(url).done((response) => {
-      if (response.cod === '200') {
-        $('#weather-description').html(toTitleCase(response.list[0].weather[0].description));
-        $('#weather-current').html(`${parseInt(response.list[0].main.temp, 10)}&deg;C`);
-        $('#weather-minmax').html(`${parseInt(response.list[0].main.temp_min, 10)}&deg;C - ${parseInt(response.list[0].main.temp_max, 10)}&deg;C`);
+      if (response.cod === 200) {
+        $('#weather-description').html(toTitleCase(response.weather[0].description));
+        $('#weather-current').html(`${parseInt(response.main.temp, 10)}&deg;C`);
+        $('#weather-minmax').html(`${parseInt(response.main.temp_min, 10)}&deg;C - ${parseInt(response.main.temp_max, 10)}&deg;C`);
       }
     });
 
