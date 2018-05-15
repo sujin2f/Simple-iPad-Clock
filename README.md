@@ -31,3 +31,7 @@ Run this script and upload your `build` directory into your web hosting service.
 
 
 $ `gulp build`
+
+
+## Setting
+On the setting fields, you can enter several information to make your clock better: Flickr information for background image, openweathermap.org information to show the temperature, and wifi name and password to show it to your visitors.
