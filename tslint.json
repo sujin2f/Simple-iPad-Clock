@@ -1,0 +1,20 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:recommended",
+    "tslint-eslint-rules",
+    "tslint-microsoft-contrib",
+    "tslint-consistent-codestyle",
+    "tslint-config-prettier"
+  ],
+  "rules": {
+    "max-line-length": {
+      "options": [120]
+    },
+    "new-parens": true,
+    "quotemark": [true, "single"],
+    "semicolon": [true, "never"],
+    "no-backbone-get-set-outside-model": false
+  },
+  "rulesDirectory": []
+}
