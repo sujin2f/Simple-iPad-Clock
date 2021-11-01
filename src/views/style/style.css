@@ -1,0 +1,163 @@
+html, body {
+	font-family: tahoma;
+	font-size: 90%;
+	height: 100%;
+	width: 100%;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+#clock-container {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	background-color: black;
+	overflow: hidden;
+}
+
+#clock-container #clock {
+    fill: transparent;
+    stroke-linecap: round;
+    position: absolute;
+    z-index: 20;
+    margin-right: 40px;
+    right: 0;
+    height: 100vh;
+    width: auto;
+}
+
+#clock-container #clock #h-pointer {
+    stroke-width: 2px;
+    stroke: white;
+}
+
+#clock-container #clock #s-pointer {
+    stroke-width: 0.5px;
+}
+
+#clock-container #clock #m-pointer {
+    stroke-width: 2px;
+    stroke: white;
+}
+
+#clock-container #clock .grad-hour {
+    stroke-width: 1px;
+    stroke: white;
+}
+
+#clock-container #clock .grad-min {
+    stroke-width: 0.5px;
+    stroke: white;
+}
+
+#clock-container #clock #digital {
+    stroke: white;
+    fill: white;
+    font-family: sans-serif;
+}
+
+#clock-container #clock .s-pointer {
+    stroke: #CCCCCC;
+    fill: #CCCCCC;
+}
+
+#clock-container #flickr-foreground {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+#weather-current {
+    font-size: 110px;
+}
+
+#clock-container #weather {
+    position: absolute;
+    left: 0;
+    top: 70px;
+    z-index: 20;
+    color: white;
+    margin-left: 20px;
+    font-size: 30px;
+    font-family: sans-serif;
+}
+
+#settings-container {
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 20;
+}
+
+#settings-container svg {
+    fill: white;
+    margin: 10px 10px 0 0;
+}
+
+#settings-container #settings-pane {
+    padding: 10px;
+}
+
+#settings-container #settings-pane input {
+    display: block;
+    font-size: 30px;
+    margin-bottom: 13px;
+    width: 500px;
+    padding: 10px;
+}
+
+#settings-container #settings-pane input[type="submit"] {
+    width: auto;
+}
+
+#wifi {
+	position: absolute;
+	z-index: 20;
+	color: white;
+	font-family: sans-serif;
+	width: 100%;
+	font-size: 70px;
+	top: 50%;
+	margin-top: -110px;
+}
+
+#wifi div {
+    text-align: center;
+}
+
+#wifi-password {
+    font-size: 120px;
+}
+
+#modes {
+	position: absolute;
+	bottom: 10px;
+	left: 10px;
+	z-index: 20;
+	border: 1px solid #666666;
+	border-radius: 10px;
+}
+
+#modes div {
+    float: left;
+    font-family: sans-serif;
+    color: white;
+    padding: 5px 10px;
+    font-size: 20px;
+    border-right: 1px solid #666666;
+
+}
+
+#modes div:last-child {
+    border-right: none;
+}
+
+.hidden {
+	display: none;
+}

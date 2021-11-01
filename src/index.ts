@@ -13,6 +13,16 @@ app.get(`/`, (_: Request, res: Response): void => {
     res.render( 'index' )
 })
 
+app.get(`/style/style.css`, (_: Request, res: Response): void => {
+    const html: string = path.join( __dirname, 'views', 'style', 'style.css' )
+    res.sendFile(html)
+})
+
+app.get(`/scripts/watch.js`, (_: Request, res: Response): void => {
+    const html: string = path.join( __dirname, 'views', 'scripts', 'watch.js' )
+    res.sendFile(html)
+})
+
 // start the Express server
 app.listen(port, (): void => {
     // tslint:disable-next-line: no-console
